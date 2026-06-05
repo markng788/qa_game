@@ -1,0 +1,522 @@
+/* NERV EVA Style Web Theme - 2000s Anime Style */
+:root {
+  --bg-black: #0c0d12;
+  --bg-dark: #12141c;
+  --bg-panel: #1a1c26;
+  
+  --orange-neon: #ff5500;
+  --orange-neon-rgb: 255, 85, 0;
+  --orange-glow: rgba(255, 85, 0, 0.25);
+  
+  --red-neon: #ff2a4b;
+  --red-neon-rgb: 255, 42, 75;
+  --red-glow: rgba(255, 42, 75, 0.25);
+  
+  --green-neon: #00ff73;
+  --green-neon-rgb: 0, 255, 115;
+  --green-glow: rgba(0, 255, 115, 0.25);
+  
+  --yellow-warning: #ffd000;
+  --yellow-glow: rgba(255, 208, 0, 0.25);
+  
+  --text-primary: #f1f3f9;
+  --text-muted: #858fa3;
+  --text-dark: #07080a;
+  
+  --font-tech: 'Share Tech Mono', 'Orbitron', monospace;
+  --font-zh: 'Noto Sans TC', sans-serif;
+  
+  --neon-border: 1px solid var(--orange-neon);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-black);
+  color: var(--text-primary);
+  font-family: var(--font-zh);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* 掃描線 CRT 特效 */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  aspect-ratio: auto;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* 網格背景 */
+.grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 85, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 85, 0, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 滾動警告條紋動畫 */
+@keyframes stripe-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 0;
+  }
+}
+
+.warning-bar {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--orange-neon),
+    var(--orange-neon) 10px,
+    var(--text-dark) 10px,
+    var(--text-dark) 20px
+  );
+  background-size: 40px 40px;
+  height: 16px;
+  width: 100%;
+  animation: stripe-move 1.5s linear infinite;
+  border-top: 1px solid var(--orange-neon);
+  border-bottom: 1px solid var(--orange-neon);
+}
+
+.warning-bar.danger {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--red-neon),
+    var(--red-neon) 10px,
+    var(--text-dark) 10px,
+    var(--text-dark) 20px
+  );
+  animation: stripe-move 1s linear infinite;
+  border-top: 1px solid var(--red-neon);
+  border-bottom: 1px solid var(--red-neon);
+}
+
+/* 機甲風斜角面板 */
+.eva-panel {
+  background-color: rgba(26, 28, 38, 0.85);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--orange-neon);
+  box-shadow: 0 0 20px var(--orange-glow);
+  position: relative;
+  clip-path: polygon(
+    0 15px, 
+    15px 0, 
+    calc(100% - 15px) 0, 
+    100% 15px, 
+    100% calc(100% - 15px), 
+    calc(100% - 15px) 100%, 
+    15px 100%, 
+    0 calc(100% - 15px)
+  );
+  padding: 30px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eva-panel.danger {
+  border-color: var(--red-neon);
+  box-shadow: 0 0 20px var(--red-glow);
+}
+
+.eva-panel.success {
+  border-color: var(--green-neon);
+  box-shadow: 0 0 20px var(--green-glow);
+}
+
+/* 裝飾性幾何角標 */
+.panel-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--orange-neon);
+  border-style: solid;
+  pointer-events: none;
+}
+
+/* 斜角按鈕 */
+.eva-button {
+  background: transparent;
+  border: 1px solid var(--orange-neon);
+  color: var(--orange-neon);
+  font-family: var(--font-tech);
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 12px 24px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  text-transform: uppercase;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.eva-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--orange-neon);
+  z-index: -1;
+  transform: translateX(-101%);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eva-button:hover {
+  color: var(--text-dark);
+  box-shadow: 0 0 12px var(--orange-glow);
+  transform: translateY(-2px);
+}
+
+.eva-button:hover::before {
+  transform: translateX(0);
+}
+
+.eva-button:active {
+  transform: translateY(0);
+}
+
+.eva-button.danger {
+  border-color: var(--red-neon);
+  color: var(--red-neon);
+}
+.eva-button.danger::before {
+  background-color: var(--red-neon);
+}
+.eva-button.danger:hover {
+  box-shadow: 0 0 12px var(--red-glow);
+}
+
+.eva-button.success {
+  border-color: var(--green-neon);
+  color: var(--green-neon);
+}
+.eva-button.success::before {
+  background-color: var(--green-neon);
+}
+.eva-button.success:hover {
+  box-shadow: 0 0 12px var(--green-glow);
+}
+
+/* 選項按鈕特有樣式 */
+.option-button {
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 16px 20px;
+  background-color: rgba(255, 85, 0, 0.05);
+  font-family: var(--font-zh);
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.option-button:hover {
+  background-color: var(--orange-neon);
+  color: var(--text-dark);
+}
+
+.option-button.selected {
+  background-color: var(--orange-neon);
+  color: var(--text-dark);
+  box-shadow: 0 0 15px var(--orange-glow);
+}
+
+/* 霓虹文字與標題 */
+.neon-title {
+  font-family: var(--font-tech);
+  font-weight: 900;
+  text-shadow: 0 0 8px var(--orange-glow);
+  letter-spacing: 4px;
+}
+
+.neon-text-orange {
+  color: var(--orange-neon);
+  text-shadow: 0 0 5px var(--orange-glow);
+}
+
+.neon-text-red {
+  color: var(--red-neon);
+  text-shadow: 0 0 5px var(--red-glow);
+}
+
+.neon-text-green {
+  color: var(--green-neon);
+  text-shadow: 0 0 5px var(--green-glow);
+}
+
+/* 輸入框機甲風 */
+.eva-input {
+  background: rgba(12, 13, 18, 0.8);
+  border: 1px solid var(--orange-neon);
+  color: var(--text-primary);
+  font-family: var(--font-tech);
+  padding: 12px 18px;
+  width: 100%;
+  font-size: 1.1rem;
+  outline: none;
+  transition: all 0.3s;
+  letter-spacing: 2px;
+}
+
+.eva-input:focus {
+  box-shadow: 0 0 15px var(--orange-glow);
+  border-color: var(--orange-neon);
+  background: rgba(26, 28, 38, 0.9);
+}
+
+/* HUD 頂部狀態欄 */
+.hud-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--orange-neon);
+  padding: 10px 20px;
+  background-color: rgba(12, 13, 18, 0.9);
+  font-family: var(--font-tech);
+  letter-spacing: 1px;
+}
+
+/* 對話氣泡 */
+.speech-bubble {
+  position: relative;
+  background: rgba(255, 85, 0, 0.08);
+  border: 1px solid var(--orange-neon);
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: -10px;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent var(--orange-neon);
+  display: block;
+  width: 0;
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: -8px;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent var(--bg-panel);
+  display: block;
+  width: 0;
+  z-index: 1;
+}
+
+/* 生命值/進度 HUD */
+.hud-progress-container {
+  width: 100%;
+  background: rgba(255, 85, 0, 0.1);
+  height: 8px;
+  border: 1px solid var(--orange-neon);
+  position: relative;
+  overflow: hidden;
+}
+
+.hud-progress-fill {
+  background-color: var(--orange-neon);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px var(--orange-neon);
+}
+
+/* 閃爍警報動畫 */
+@keyframes alert-blink {
+  0%, 100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.alert-flash {
+  animation: alert-blink 1.5s infinite;
+  background-color: rgba(255, 85, 0, 0.1);
+  border: 1px solid var(--orange-neon);
+}
+
+.alert-flash.danger {
+  animation: alert-blink 1s infinite;
+  background-color: rgba(255, 42, 75, 0.1);
+  border-color: var(--red-neon);
+  color: var(--red-neon);
+}
+
+/* 滿版載入特效 */
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-black);
+  z-index: 1000;
+}
+
+.hex-grid {
+  width: 100px;
+  height: 100px;
+  border: 2px solid var(--orange-neon);
+  border-radius: 50%;
+  animation: spin 3s linear infinite;
+  box-shadow: 0 0 15px var(--orange-glow);
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.hex-grid::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  border: 2px dashed var(--orange-neon);
+  border-radius: 50%;
+  animation: spin-reverse 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* 關主頭像卡片 */
+.avatar-card {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(26,28,38,0.95), rgba(12,13,18,0.95));
+  border: 1px solid var(--orange-neon);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.avatar-image-container {
+  width: 120px;
+  height: 120px;
+  border: 2px solid var(--orange-neon);
+  background: var(--bg-black);
+  position: relative;
+  box-shadow: 0 0 15px var(--orange-glow);
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.avatar-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated; /* 增加復古動漫感 */
+}
+
+.avatar-overlay-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(255, 85, 0, 0.15) 50%);
+  background-size: 100% 6px;
+  pointer-events: none;
+}
+
+/* 結算頁戰績列表 */
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: var(--font-tech);
+}
+
+.stats-table th, .stats-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 85, 0, 0.2);
+}
+
+.stats-table th {
+  color: var(--orange-neon);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.stats-table td {
+  color: var(--text-primary);
+}
+
+/* 浮動動漫感標籤 */
+.tag {
+  background-color: var(--orange-neon);
+  color: var(--text-dark);
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-family: var(--font-tech);
+  font-weight: 900;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.tag.red {
+  background-color: var(--red-neon);
+  color: var(--text-primary);
+}
+
+.tag.green {
+  background-color: var(--green-neon);
+  color: var(--text-dark);
+}
